@@ -1,26 +1,13 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>{{ title }}</title>
-</head>
-<body>
-<ul>
-    <li><a href="{% url 'home' %}">Home</a></li>
-    {% for m in menu %}
-    {% if not forloop.last %}<li>{% else %} <li class="last">{% endif %}
-        <a href="{% url m.url_name%}">{{m.title}}</a>
-    </li>
-    {% endfor %}
-</ul>
+{% extends 'base.html' %}
+{% block content %}
 <h1>{{ title }}</h1>
-
+{% include 'medals/includes/nav.html' %}
 <ul>
     {% for p in posts %}
     {% if p.is_published %}
     <li>
         <h2>{{ p.title }}</h2>
-        <p>{{ p.content }}</p>
+        <p>{{ p.content|truncatewords:20 }}</p>
         <p><a href="{% url 'post' p.id %}">Read more</a></p>
         {% if not forloop.last %}
         <hr>
@@ -29,5 +16,8 @@
     {% endif %}
     {% endfor %}
 </ul>
+{% include 'medals/includes/nav.html' %}
 </body>
 </html>
+{% endblock %}
+
